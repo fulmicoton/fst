@@ -6,6 +6,7 @@ use std::path::Path;
 use automaton::{Automaton, AlwaysMatch};
 use raw;
 pub use raw::IndexedValue as IndexedValue;
+use raw::MmapReadOnly;
 use stream::{IntoStreamer, Streamer};
 use Result;
 
@@ -64,6 +65,16 @@ impl Map {
     /// and the map, then an error is returned.
     pub fn from_path<P: AsRef<Path>>(path: P) -> Result<Self> {
         raw::Fst::from_path(path).map(Map)
+    }
+
+    /// Opens a map stored in a memory map.
+    ///
+    /// The map must have been written with a compatible finite state
+    /// transducer builder (`MapBuilder` qualifies). If the format is invalid
+    /// or if there is a mismatch between the API version of this library
+    /// and the map, then an error is returned.
+    pub fn from_mmap(mmap: MmapReadOnly) -> Result<Self> {
+        raw::Fst::from_mmap(mmap).map(Map)
     }
 
     /// Creates a map from its representation as a raw byte sequence.
