@@ -291,6 +291,12 @@ impl<W: io::Write> Builder<W> {
         }
         Ok(())
     }
+
+    /// Returns the number of bytes that have been written to 
+    /// `wtr` so far.
+    pub fn bytes_written(&self) -> usize {
+        self.wtr.count() as usize
+    }
 }
 
 impl UnfinishedNodes {

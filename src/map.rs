@@ -544,6 +544,12 @@ impl<W: io::Write> MapBuilder<W> {
         self.0.extend_stream(StreamOutput(stream.into_stream()))
     }
 
+    /// Returns the number of bytes that have been written to
+    /// `wtr` so far.
+    pub fn bytes_written(&self) -> usize {
+        self.0.bytes_written()
+    }
+
     /// Finishes the construction of the map and flushes the underlying
     /// writer. After completion, the data written to `W` may be read using
     /// one of `Map`'s constructor methods.
